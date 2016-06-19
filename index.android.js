@@ -14,18 +14,9 @@ import {
     View
 } from 'react-native';
 
-var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
-
-//mock data
-var MOCKED_MOVIES_DATA = [
-    {
-        title: 'Title',
-        year: '2015',
-        posters: {
-            thumbnail: 'http://i.imgur.com/UePbdph.jpg'
-        }
-    }
-]
+var API_KEY = '352bdc4a87f11ece4fc71eeebbbafcae7f48d33e01a123c8f647380f7d51ff2ae810013d8deef886545f049a06ab4bffe492f355baf59c19df52fe00e0ac42f3eb5010516316e10eb4f5f9350f0fccf3c860ee4b1673775925e32b53c6207e81'
+var PROJECT_ID = '5742044f07271914d3cbbf93'
+var REQUEST_URL = 'https://api.keen.io/3.0/projects/' + PROJECT_ID + '/queries/extraction?api_key=' + API_KEY + '&event_collection=fungi_dht11&timezone=UTC&latest=5&timeframe=this_14_days&filters=%5B%5D';
 
 class AwesomeProject extends Component {
     constructor(props){
@@ -47,7 +38,7 @@ class AwesomeProject extends Component {
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+                    dataSource: this.state.dataSource.cloneWithRows(responseData.result),
                     loaded: true,
                 });
             })
@@ -62,7 +53,7 @@ class AwesomeProject extends Component {
         return (
             <ListView
                 dataSource={this.state.dataSource}
-                renderRow={this.renderMovie}
+                renderRow={this.renderSensorData}
                 style={styles.listView}
             />
         );
@@ -72,19 +63,22 @@ class AwesomeProject extends Component {
         return (
             <View style={styles.container}>
                 <Text>
-                    Loading movies...
+                    Loading sensor data...
                 </Text>
             </View>
         )
     }
 
-    renderMovie(movie) {
+    renderSensorData(sensor) {
         return (
             <View style={styles.container}>
-                <Image source={{uri: movie.posters.thumbnail}} style={styles.thumbnail} />
+                <View style={styles.thumbnail}>
+                    <Text style={styles.year}> {sensor.keen.timestamp}</Text>
+                </View>
                 <View style={styles.rightContainer}>
-                    <Text style={styles.title}>{movie.title}</Text>
-                    <Text style={styles.year}>{movie.year}</Text>
+                    <Text style={styles.title}>Lux : {sensor.lux}</Text>
+                    <Text style={styles.title}>Temperature : {sensor.temperature}</Text>
+                    <Text style={styles.title}>Humidity : {sensor.humidity}</Text>
                 </View>
             </View>
         );
