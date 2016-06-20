@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   footer: {
-    borderTopColor: '#C0C0C4',
+    borderTopColor: '#adadad',
     borderTopWidth: StyleSheet.hairlineWidth,
     alignSelf: 'stretch',
     padding: 5,
