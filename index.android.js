@@ -1,17 +1,17 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+* Sample React Native App
+* https://github.com/facebook/react-native
+* @flow
+*/
 
 import React, {Component} from 'react';
 import {
-    AppRegistry,
-    Image,
-    ListView,
-    StyleSheet,
-    Text,
-    View
+  AppRegistry,
+  Image,
+  ListView,
+  StyleSheet,
+  Text,
+  View
 } from 'react-native';
 import moment from 'moment';
 import tz from 'moment-timezone';
@@ -28,264 +28,276 @@ var FUNGI_LUX = REQUEST_URL + "fungi_lux" + REQUEST_PARAMETER;
 var TIMEZONE = 'Europe/Berlin'
 var TIME_FORMAT = 'MMMM Do YYYY, h:mm:ss a'
 
+class CardComponent extends Component {
+  render() {
+    var time = moment(this.props.timestamp).tz(TIMEZONE).format(TIME_FORMAT);
+    return(
+      <View style={[styles.container]}>
+        <View style={[styles.header, this.props.colorStyle]}>
+          <Text style={styles.title}>{this.props.title} </Text>
+        </View>
+        <View style={styles.valueContainer}>
+          <Text style={styles.value}>{this.props.value}</Text>
+        </View>
+        <View style={[styles.footer]}>
+          <Text style={styles.dateFormat}>{time}</Text>
+        </View>
+      </View>
+    );
+  }
+}
+
+class LoadingView extends Component {
+  render(){
+    return(
+      <View style={styles.container}>
+        <Text>
+          Loading {this.props.title} sensor data...
+        </Text>
+      </View>
+    );
+  }
+}
+
 class HumidityComponent extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 != row2,
-            }),
-            loaded: false,
-        };
+  constructor(props){
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 != row2,
+      }),
+      loaded: false,
+    };
+  }
+
+  componentDidMount(){
+    this.fetchData();
+  }
+
+  fetchData(){
+    fetch(FUNGI_HUMIDITY)
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(responseData.result),
+        loaded: true,
+      });
+    })
+    .done();
+  }
+
+  render() {
+    if(!this.state.loaded) {
+      return this.renderLoadingView();
     }
 
-    componentDidMount(){
-        this.fetchData();
-    }
+    return (
+      <View>
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderSensorData}
+        style={styles.listView}
+      />
+      </View>
+    );
+  }
 
-    fetchData(){
-        fetch(FUNGI_HUMIDITY)
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData.result),
-                    loaded: true,
-                });
-            })
-            .done();
-    }
+  renderLoadingView() {
+    return (
+      <LoadingView title="humidity" />
+    );
+  }
 
-    render() {
-        if(!this.state.loaded) {
-            return this.renderLoadingView();
-        }
-
-        return (
-            <View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderSensorData}
-                    style={styles.listView}
-                />
-            </View>
-        );
-    }
-
-    renderLoadingView() {
-        return (
-            <View style={styles.container}>
-                <Text>
-                    Loading humidity sensor data...
-                </Text>
-            </View>
-        )
-    }
-
-    renderSensorData(sensor) {
-        var time = moment(sensor.timestamp).tz(TIMEZONE).format(TIME_FORMAT);
-        return (
-          <View style={[styles.container, styles.turquoise]}>
-              <View style={styles.rightContainer}>
-                  <Text style={styles.title}>Humidity </Text>
-                  <Text style={styles.value}>{sensor.humidity}</Text>
-                  <Text style={styles.dateFormat}>{time}</Text>
-              </View>
-          </View>
-        );
-    }
+  renderSensorData(sensor) {
+    return (
+      <CardComponent title="Humidity" value={sensor.humidity} timestamp={sensor.timestamp} colorStyle={turquoise} />
+    );
+  }
 }
 
 class LuxComponent extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 != row2,
-            }),
-            loaded: false,
-        };
+  constructor(props){
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 != row2,
+      }),
+      loaded: false,
+    };
+  }
+
+  componentDidMount(){
+    this.fetchData();
+  }
+
+  fetchData(){
+    fetch(FUNGI_LUX)
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(responseData.result),
+        loaded: true,
+      });
+    })
+    .done();
+  }
+
+  render() {
+    if(!this.state.loaded) {
+      return this.renderLoadingView();
     }
 
-    componentDidMount(){
-        this.fetchData();
-    }
+    return (
+      <View>
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderSensorData}
+        style={styles.listView}
+      />
+      </View>
+    );
+  }
 
-    fetchData(){
-        fetch(FUNGI_LUX)
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData.result),
-                    loaded: true,
-                });
-            })
-            .done();
-    }
+  renderLoadingView() {
+    return (
+      <LoadingView title="lux" />
+    );
+  }
 
-    render() {
-        if(!this.state.loaded) {
-            return this.renderLoadingView();
-        }
-
-        return (
-            <View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderSensorData}
-                    style={styles.listView}
-                />
-            </View>
-        );
-    }
-
-    renderLoadingView() {
-        return (
-            <View style={styles.container}>
-                <Text>
-                    Loading lux sensor data...
-                </Text>
-            </View>
-        )
-    }
-
-    renderSensorData(sensor) {
-        var time = moment(sensor.timestamp).tz(TIMEZONE).format(TIME_FORMAT);
-        return (
-          <View style={[styles.container, styles.yolk]}>
-              <View style={styles.rightContainer}>
-                  <Text style={styles.title}>Lux </Text>
-                  <Text style={styles.value}>{sensor.lux}</Text>
-                  <Text style={styles.dateFormat}>{time}</Text>
-              </View>
-          </View>
-        );
-    }
+  renderSensorData(sensor) {
+    return (
+      <CardComponent title="Lux" value={sensor.lux} timestamp={sensor.timestamp} colorStyle={yolk} />
+    );
+  }
 }
 
 class TemperatureComponent extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 != row2,
-            }),
-            loaded: false,
-        };
+  constructor(props){
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 != row2,
+      }),
+      loaded: false,
+    };
+  }
+
+  componentDidMount(){
+    this.fetchData();
+  }
+
+  fetchData(){
+    fetch(FUNGI_TEMPERATURE)
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(responseData.result),
+        loaded: true,
+      });
+    })
+    .done();
+  }
+
+  render() {
+    if(!this.state.loaded) {
+      return this.renderLoadingView();
     }
 
-    componentDidMount(){
-        this.fetchData();
-    }
+    return (
+      <View>
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderSensorData}
+        style={styles.listView}
+      />
+      </View>
+    );
+  }
 
-    fetchData(){
-        fetch(FUNGI_TEMPERATURE)
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData.result),
-                    loaded: true,
-                });
-            })
-            .done();
-    }
+  renderLoadingView() {
+    return (
+      <LoadingView title="temperature" />
+    );
+  }
 
-    render() {
-        if(!this.state.loaded) {
-            return this.renderLoadingView();
-        }
-
-        return (
-            <View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderSensorData}
-                    style={styles.listView}
-                />
-            </View>
-        );
-    }
-
-    renderLoadingView() {
-        return (
-            <View style={styles.container}>
-                <Text>
-                    Loading temperature sensor data...
-                </Text>
-            </View>
-        )
-    }
-
-    renderSensorData(sensor) {
-        var time = moment(sensor.timestamp).tz(TIMEZONE).format(TIME_FORMAT);
-        return (
-          <View style={[styles.container, styles.melon]}>
-              <View style={styles.rightContainer}>
-                  <Text style={styles.title}>Temperature </Text>
-                  <Text style={styles.value}>{sensor.temperature}</Text>
-                  <Text style={styles.dateFormat}>{time}</Text>
-              </View>
-          </View>
-        );
-    }
+  renderSensorData(sensor) {
+    return (
+      <CardComponent title="Temperature" value={sensor.temperature} timestamp={sensor.timestamp} colorStyle={melon} />
+    );
+  }
 }
 
 class AwesomeProject extends Component {
-    render() {
-        return (
-            <View>
-                <TemperatureComponent />
-                <HumidityComponent />
-                <LuxComponent />
-            </View>
-        );
-    }
+  render() {
+    return (
+      <View>
+        <TemperatureComponent />
+        <HumidityComponent />
+        <LuxComponent />
+      </View>
+    );
+  }
+}
+
+var turquoise = {
+  backgroundColor: '#01B9BB',
+}
+
+var melon = {
+  backgroundColor: '#F25E42',
+}
+
+var yolk = {
+  backgroundColor: '#F7D22B',
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        padding: 10,
-    },
-    turquoise: {
-        backgroundColor: '#01B9BB',
-    },
-    yolk: {
-        backgroundColor: '#F7D22B',
-    },
-    melon: {
-        backgroundColor: '#F25E42',
-    },
-    rightContainer: {
-        flex: 1,
-    },
-    thumbnail: {
-        width: 53,
-        height: 81,
-    },
-    title: {
-        fontSize: 20,
-        marginBottom: 8,
-        color: '#ffffff',
-        textAlign: 'center',
-    },
-    value: {
-      fontSize: 28,
-      color: '#ffffff',
-      textAlign: 'center',
-      marginBottom: 8,
-    },
-    dateFormat: {
-      fontSize: 16,
-      color: '#ffffff',
-      textAlign: 'center',
-    },
-    listView: {
-        backgroundColor: '#F5FCFF',
-    }
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#DFDFE1',
+    margin: 10,
+  },
+  header: {
+    padding: 10,
+    alignSelf: 'stretch',
+  },
+  footer: {
+    borderTopColor: '#C0C0C4',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    alignSelf: 'stretch',
+    padding: 5,
+  },
+  valueContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+    padding: 20,
+  },
+  thumbnail: {
+    width: 53,
+    height: 81,
+  },
+  title: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: '#ffffff',
+    textAlign: 'left',
+  },
+  value: {
+    fontSize: 28,
+    color: '#565962',
+    textAlign: 'center',
+  },
+  dateFormat: {
+    fontSize: 16,
+    color: '#565962',
+    textAlign: 'left',
+  },
+  listView: {
+    backgroundColor: '#F5FCFF',
+  }
 });
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
