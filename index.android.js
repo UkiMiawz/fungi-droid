@@ -26,13 +26,13 @@ var FUNGI_TEMPERATURE = REQUEST_URL + "fungi_temperature" + REQUEST_PARAMETER;
 var FUNGI_LUX = REQUEST_URL + "fungi_lux" + REQUEST_PARAMETER;
 
 var TIMEZONE = 'Europe/Berlin'
-var TIME_FORMAT = 'MMMM Do YYYY, h:mm:ss a'
+var TIME_FORMAT = 'MMMM Do YYYY, hh:mm:ss'
 
 class CardComponent extends Component {
   render() {
     var time = moment(this.props.timestamp).tz(TIMEZONE).format(TIME_FORMAT);
     return(
-      <View style={[styles.container]}>
+      <View style={[styles.cardView]}>
         <View style={[styles.header, this.props.colorStyle]}>
           <Text style={styles.title}>{this.props.title} </Text>
         </View>
@@ -227,13 +227,26 @@ class TemperatureComponent extends Component {
   }
 }
 
+class HeaderComponent extends Component {
+  render() {
+    return (
+      <View style={styles.headerView}>
+        <Text style={styles.headerText}>Fungi</Text>
+      </View>
+    );
+  }
+}
+
 class AwesomeProject extends Component {
   render() {
     return (
       <View>
-        <TemperatureComponent />
-        <HumidityComponent />
-        <LuxComponent />
+        <HeaderComponent />
+        <View style={styles.bodyView}>
+          <TemperatureComponent />
+          <HumidityComponent />
+          <LuxComponent />
+        </View>
       </View>
     );
   }
@@ -256,8 +269,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
+  },
+  cardView: {
+    margin: 10,
     backgroundColor: '#DFDFE1',
+  },
+  bodyView: {
     margin: 10,
   },
   header: {
@@ -297,6 +315,18 @@ const styles = StyleSheet.create({
   },
   listView: {
     backgroundColor: '#F5FCFF',
+  },
+  headerView: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00B1DA',
+    padding: 10,
+  },
+  headerText: {
+    fontSize: 20,
+    color: '#ffffff',
   }
 });
 
