@@ -92,10 +92,47 @@ class HumidityComponent extends Component {
         });
     }
 
-    renderLoadingView() {
+    render() {
+        if (!this.state.loading) {
+            return this.renderLoadingView();
+        }
+
+        if(this.state.items.length > 0)
+        {
+            return (
+                <View>
+                    <CardComponent title="Humidity" value={this.state.items[0].humidity} timestamp={this.state.items[0].created_date} colorStyle={turquoise}/>
+                </View>
+            );
+        }
+
         return (
-            <LoadingView title="humidity"/>
-    );
+            <View>
+            <CardComponent title="Humidity" value="0" timestamp="_" colorStyle={turquoise}/>
+            </View>
+        );
+    }
+}
+
+class LuxComponent extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            items: [],
+            loading: true
+        }
+    }
+
+    componentDidMount(){
+        base.bindToState('fungi_lux', {
+            context: this,
+            state: 'items',
+            asArray: true,
+            queries: {
+                orderByChild: 'timestamp',
+                limitToLast: 1
+            }
+        });
     }
 
     render() {
@@ -107,130 +144,59 @@ class HumidityComponent extends Component {
         {
             return (
                 <View>
-                    <CardComponent title="Humidity" value={this.state.items[0].humidity} timestamp={this.state.items[0].timestamp} colorStyle={turquoise}/>
-                </View>
-            );
-        }
-            console.log(this.state.items[0])
-
-        return (
-            <View>
-            <CardComponent title="Humidity" value="0" timestamp="_" colorStyle={turquoise}/>
+                <CardComponent title="Lux" value={Math.round(this.state.items[0].lux * 100) / 100} timestamp={this.state.items[0].created_date} colorStyle={yolk}/>
             </View>
         );
-    }
-}
-
-class LuxComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 != row2,
-            }),
-            loaded: false,
-        };
-    }
-
-    componentDidMount() {
-        this.fetchData();
-    }
-
-    fetchData() {
-        fetch(FUNGI_LUX)
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData.result),
-                    loaded: true,
-                });
-            })
-            .done();
-    }
-
-    render() {
-        if (!this.state.loaded) {
-            return this.renderLoadingView();
         }
 
         return (
             <View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderSensorData}
-                    style={styles.listView}
-                />
+            <CardComponent title="Lux" value="0" timestamp="_" colorStyle={yolk}/>
             </View>
-        );
-    }
-
-    renderLoadingView() {
-        return (
-            <LoadingView title="lux"/>
-        );
-    }
-
-    renderSensorData(sensor) {
-        return (
-            <CardComponent title="Lux" value={sensor.lux} timestamp={sensor.timestamp} colorStyle={yolk}/>
         );
     }
 }
 
 class TemperatureComponent extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
         this.state = {
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 != row2,
-            }),
-            loaded: false,
-        };
+            items: [],
+            loading: true
+        }
     }
 
-    componentDidMount() {
-        this.fetchData();
-    }
-
-    fetchData() {
-        fetch(FUNGI_TEMPERATURE)
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData.result),
-                    loaded: true,
-                });
-            })
-            .done();
+    componentDidMount(){
+        base.bindToState('fungi_temperature', {
+            context: this,
+            state: 'items',
+            asArray: true,
+            queries: {
+                orderByChild: 'timestamp',
+                limitToLast: 1
+            }
+        });
     }
 
     render() {
-        if (!this.state.loaded) {
+        if (!this.state.loading) {
             return this.renderLoadingView();
+        }
+
+        if(this.state.items.length > 0)
+        {
+            return (
+                <View>
+                <CardComponent title="Temperature" value={this.state.items[0].temperature} timestamp={this.state.items[0].created_date} colorStyle={melon}/>
+            </View>
+        );
         }
 
         return (
             <View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderSensorData}
-                    style={styles.listView}
-                />
+            <CardComponent title="Temperature" value="0" timestamp="_" colorStyle={melon}/>
             </View>
-        );
-    }
-
-    renderLoadingView() {
-        return (
-            <LoadingView title="temperature"/>
-        );
-    }
-
-    renderSensorData(sensor) {
-        return (
-            <CardComponent title="Temperature" value={sensor.temperature} timestamp={sensor.timestamp}
-                           colorStyle={melon}/>
-        );
+    );
     }
 }
 
