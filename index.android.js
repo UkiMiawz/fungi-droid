@@ -72,58 +72,51 @@ class LoadingView extends Component {
 }
 
 class HumidityComponent extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
         this.state = {
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 != row2,
-            }),
-            loaded: false,
-        };
-    }
-
-    componentDidMount() {
-        this.fetchData();
-    }
-
-    fetchData() {
-        fetch(FUNGI_HUMIDITY)
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData.result),
-                    loaded: true,
-                });
-            })
-            .done();
-    }
-
-    render() {
-        if (!this.state.loaded) {
-            return this.renderLoadingView();
+            items: [],
+            loading: true
         }
+    }
 
-        return (
-            <View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderSensorData}
-                    style={styles.listView}
-                />
-            </View>
-        );
+    componentDidMount(){
+        base.bindToState('fungi_humidity', {
+            context: this,
+            state: 'items',
+            asArray: true,
+            queries: {
+                orderByChild: 'timestamp',
+                limitToLast: 1
+            }
+        });
     }
 
     renderLoadingView() {
         return (
             <LoadingView title="humidity"/>
-        );
+    );
     }
 
-    renderSensorData(sensor) {
+    render() {
+        if (!this.state.loading) {
+            return this.renderLoadingView();
+        }
+
+        if(this.state.items.length > 0)
+        {
+            return (
+                <View>
+                    <CardComponent title="Humidity" value={this.state.items[0].humidity} timestamp={this.state.items[0].timestamp} colorStyle={turquoise}/>
+                </View>
+            );
+        }
+            console.log(this.state.items[0])
+
         return (
-            <CardComponent title="Humidity" value={sensor.humidity} timestamp={sensor.timestamp}
-                           colorStyle={turquoise}/>
+            <View>
+            <CardComponent title="Humidity" value="0" timestamp="_" colorStyle={turquoise}/>
+            </View>
         );
     }
 }
