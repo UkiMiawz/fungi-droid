@@ -19,15 +19,11 @@ import CardComponent from './components/CardComponent'
 import HeaderComponent from './components/HeaderComponent'
 import LoadingComponent from './components/LoadingComponent'
 
-var API_KEY = '352bdc4a87f11ece4fc71eeebbbafcae7f48d33e01a123c8f647380f7d51ff2ae810013d8deef886545f049a06ab4bffe492f355baf59c19df52fe00e0ac42f3eb5010516316e10eb4f5f9350f0fccf3c860ee4b1673775925e32b53c6207e81'
-var PROJECT_ID = '5742044f07271914d3cbbf93';
-var REQUEST_URL = 'https://api.keen.io/3.0/projects/' + PROJECT_ID + '/queries/extraction?api_key=' + API_KEY + '&event_collection=';
-var REQUEST_PARAMETER = '&timezone=UTC&latest=1';
 var FIREBASE_URL = "https://fungi-5edf1.firebaseio.com";
 
-var FUNGI_HUMIDITY = REQUEST_URL + "fungi_humidity" + REQUEST_PARAMETER;
-var FUNGI_TEMPERATURE = REQUEST_URL + "fungi_temperature" + REQUEST_PARAMETER;
-var FUNGI_LUX = REQUEST_URL + "fungi_lux" + REQUEST_PARAMETER;
+var FUNGI_HUMIDITY = "fungi_humidity";
+var FUNGI_TEMPERATURE = "fungi_temperature";
+var FUNGI_LUX = "fungi_lux";
 
 var minTemperature = 18;
 var maxTemperature = 28;
@@ -50,7 +46,7 @@ class HumidityComponent extends Component {
     }
 
     componentDidMount(){
-        base.bindToState('fungi_humidity', {
+        base.bindToState(FUNGI_HUMIDITY, {
             context: this,
             state: 'items',
             asArray: true,
@@ -91,7 +87,7 @@ class LuxComponent extends Component {
     }
 
     componentDidMount(){
-        base.bindToState('fungi_lux', {
+        base.bindToState(FUNGI_LUX, {
             context: this,
             state: 'items',
             asArray: true,
@@ -132,7 +128,7 @@ class TemperatureComponent extends Component {
     }
 
     componentDidMount(){
-        base.bindToState('fungi_temperature', {
+        base.bindToState(FUNGI_TEMPERATURE, {
             context: this,
             state: 'items',
             asArray: true,
