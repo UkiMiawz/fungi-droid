@@ -13,23 +13,19 @@ import {
     Text,
     View
 } from 'react-native';
-import moment from 'moment';
-import tz from 'moment-timezone';
 import Rebase from 're-base';
-
-var base = Rebase.createClass('https://fungi-5edf1.firebaseio.com');
+import CardComponent from './components/CardComponent'
+import HeaderComponent from './components/HeaderComponent'
 
 var API_KEY = '352bdc4a87f11ece4fc71eeebbbafcae7f48d33e01a123c8f647380f7d51ff2ae810013d8deef886545f049a06ab4bffe492f355baf59c19df52fe00e0ac42f3eb5010516316e10eb4f5f9350f0fccf3c860ee4b1673775925e32b53c6207e81'
 var PROJECT_ID = '5742044f07271914d3cbbf93';
 var REQUEST_URL = 'https://api.keen.io/3.0/projects/' + PROJECT_ID + '/queries/extraction?api_key=' + API_KEY + '&event_collection=';
 var REQUEST_PARAMETER = '&timezone=UTC&latest=1';
+var FIREBASE_URL = "https://fungi-5edf1.firebaseio.com";
 
 var FUNGI_HUMIDITY = REQUEST_URL + "fungi_humidity" + REQUEST_PARAMETER;
 var FUNGI_TEMPERATURE = REQUEST_URL + "fungi_temperature" + REQUEST_PARAMETER;
 var FUNGI_LUX = REQUEST_URL + "fungi_lux" + REQUEST_PARAMETER;
-
-var TIMEZONE = 'Europe/Berlin';
-var TIME_FORMAT = 'MMMM Do YYYY, hh:mm:ss';
 
 var minTemperature = 18;
 var maxTemperature = 28;
@@ -40,36 +36,7 @@ var maxHumidity = 90;
 var minLux = 90;
 var maxLux = 110;
 
-class CardComponent extends Component {
-    render() {
-        var time = moment(this.props.timestamp).tz(TIMEZONE).format(TIME_FORMAT);
-        return (
-            <View style={[styles.cardView]}>
-                <View style={[styles.header, this.props.colorStyle]}>
-                    <Text style={styles.title}>{this.props.title} </Text>
-                </View>
-                <View style={styles.valueContainer}>
-                    <Text style={styles.value}>{this.props.value}</Text>
-                </View>
-                <View style={[styles.footer]}>
-                    <Text style={styles.dateFormat}>{time}</Text>
-                </View>
-            </View>
-        );
-    }
-}
-
-class LoadingView extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>
-                    Loading {this.props.title} sensor data...
-                </Text>
-            </View>
-        );
-    }
-}
+var base = Rebase.createClass(FIREBASE_URL);
 
 class HumidityComponent extends Component {
     constructor(props){
@@ -200,16 +167,6 @@ class TemperatureComponent extends Component {
     }
 }
 
-class HeaderComponent extends Component {
-    render() {
-        return (
-            <View style={styles.headerView}>
-                <Text style={styles.headerText}>Fungi</Text>
-            </View>
-        );
-    }
-}
-
 class AwesomeProject extends Component {
     render() {
         return (
@@ -225,17 +182,9 @@ class AwesomeProject extends Component {
     }
 }
 
-var turquoise = {
-    backgroundColor: '#01B9BB',
-}
-
-var melon = {
-    backgroundColor: '#F25E42',
-}
-
-var yolk = {
-    backgroundColor: '#F7D22B',
-}
+var turquoise = { backgroundColor: '#01B9BB', }
+var melon = { backgroundColor: '#F25E42', }
+var yolk = { backgroundColor: '#F7D22B', }
 
 const styles = StyleSheet.create({
     container: {
@@ -244,62 +193,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    cardView: {
-        margin: 10,
-        backgroundColor: '#DFDFE1',
-    },
     bodyView: {
         margin: 10,
-    },
-    header: {
-        padding: 10,
-        alignSelf: 'stretch',
-    },
-    footer: {
-        borderTopColor: '#adadad',
-        borderTopWidth: StyleSheet.hairlineWidth,
-        alignSelf: 'stretch',
-        padding: 5,
-    },
-    valueContainer: {
-        flex: 1,
-        alignSelf: 'stretch',
-        padding: 20,
     },
     thumbnail: {
         width: 53,
         height: 81,
-    },
-    title: {
-        fontSize: 16,
-        marginBottom: 8,
-        color: '#ffffff',
-        textAlign: 'left',
-    },
-    value: {
-        fontSize: 28,
-        color: '#565962',
-        textAlign: 'center',
-    },
-    dateFormat: {
-        fontSize: 16,
-        color: '#565962',
-        textAlign: 'left',
-    },
-    listView: {
-        backgroundColor: '#F5FCFF',
-    },
-    headerView: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#00B1DA',
-        padding: 10,
-    },
-    headerText: {
-        fontSize: 20,
-        color: '#ffffff',
     }
 });
 
