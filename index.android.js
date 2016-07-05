@@ -14,8 +14,10 @@ import {
     View
 } from 'react-native';
 import Rebase from 're-base';
+
 import CardComponent from './components/CardComponent'
 import HeaderComponent from './components/HeaderComponent'
+import LoadingComponent from './components/LoadingComponent'
 
 var API_KEY = '352bdc4a87f11ece4fc71eeebbbafcae7f48d33e01a123c8f647380f7d51ff2ae810013d8deef886545f049a06ab4bffe492f355baf59c19df52fe00e0ac42f3eb5010516316e10eb4f5f9350f0fccf3c860ee4b1673775925e32b53c6207e81'
 var PROJECT_ID = '5742044f07271914d3cbbf93';
@@ -74,9 +76,7 @@ class HumidityComponent extends Component {
         }
 
         return (
-            <View>
-            <CardComponent title="Humidity" value="0" timestamp="_" colorStyle={turquoise}/>
-            </View>
+            <LoadingComponent title="humidity"/>
         );
     }
 }
@@ -111,15 +111,13 @@ class LuxComponent extends Component {
         {
             return (
                 <View>
-                <CardComponent title="Lux" value={Math.round(this.state.items[0].lux * 100) / 100} timestamp={this.state.items[0].created_date} colorStyle={yolk}/>
-            </View>
-        );
+                    <CardComponent title="Lux" value={Math.round(this.state.items[0].lux * 100) / 100} timestamp={this.state.items[0].created_date} colorStyle={yolk}/>
+                </View>
+            );
         }
 
         return (
-            <View>
-            <CardComponent title="Lux" value="0" timestamp="_" colorStyle={yolk}/>
-            </View>
+            <LoadingComponent title="lux"/>
         );
     }
 }
@@ -154,16 +152,14 @@ class TemperatureComponent extends Component {
         {
             return (
                 <View>
-                <CardComponent title="Temperature" value={this.state.items[0].temperature} timestamp={this.state.items[0].created_date} colorStyle={melon}/>
-            </View>
-        );
+                    <CardComponent title="Temperature" value={this.state.items[0].temperature} timestamp={this.state.items[0].created_date} colorStyle={melon}/>
+                </View>
+            );
         }
 
         return (
-            <View>
-            <CardComponent title="Temperature" value="0" timestamp="_" colorStyle={melon}/>
-            </View>
-    );
+            <LoadingComponent title="temperature"/>
+        );
     }
 }
 
@@ -195,10 +191,6 @@ const styles = StyleSheet.create({
     },
     bodyView: {
         margin: 10,
-    },
-    thumbnail: {
-        width: 53,
-        height: 81,
     }
 });
 
