@@ -1,15 +1,34 @@
 {
-  "name": "AwesomeProject",
+  "name": "awesomeproject",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "bluebird": "^2.10.2",
+    "firebase": "^2.4.2",
+    "immutable": "^3.8.1",
+    "lodash": "^4.13.1",
     "moment": "^2.13.0",
     "moment-timezone": "^0.5.4",
-    "react": "^15.1.0",
-    "react-burger-menu": "^1.9.0",
-    "react-native": "0.27.2"
-  }
+    "react": ">15.1.0",
+    "react-dom": "^15.2.0",
+    "react-native": ">0.27.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
+  },
+  "description": "https://facebook.github.io/react-native/docs/getting-started.html",
+  "main": "index.android.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UkiMiawz/fungi-droid.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UkiMiawz/fungi-droid/issues"
+  },
+  "homepage": "https://github.com/UkiMiawz/fungi-droid#readme"
 }
