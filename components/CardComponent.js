@@ -32,7 +32,7 @@ class CardComponent extends Component {
 
 const styles = StyleSheet.create({
     cardView: {
-        width: width*0.30,
+        flex: 0.3,
         backgroundColor: '#000000',
         marginBottom: 10,
         flexDirection: 'column',
