@@ -18,6 +18,8 @@ import Rebase from 're-base';
 import CardComponent from './components/CardComponent'
 import HeaderComponent from './components/HeaderComponent'
 import LoadingComponent from './components/LoadingComponent'
+import StatusComponent from './components/StatusComponent'
+import AutomationComponent from './components/AutomationComponent'
 
 var FIREBASE_URL = "https://fungi-5edf1.firebaseio.com";
 
@@ -173,6 +175,8 @@ class AwesomeProject extends Component {
                         <HumidityComponent />
                         <LuxComponent />
                     </View>
+                    <View><StatusComponent /></View>
+                    <View><AutomationComponent /></View>
                 </Image>
             </View>
         );
@@ -186,7 +190,7 @@ const styles = StyleSheet.create({
         height: null,
     },
     bodyView: {
-        margin: 10,
+        padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
     }

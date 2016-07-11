@@ -21,7 +21,6 @@ class HeaderComponent extends Component {
 const styles = StyleSheet.create({
     headerView: {
         flex: 1,
-        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#000000',
