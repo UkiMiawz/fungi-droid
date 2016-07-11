@@ -35,25 +35,30 @@ class AutomationComponent extends Component {
 
 const styles = StyleSheet.create({
     automationView: {
-        flex: 1,
-        padding: 20,
+        paddingTop: 10,
+        paddingBottom: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     cardView: {
-        flex: 0.2,
+        borderWidth: 1,
+        borderColor: '#ffffff',
+        flex: 0.3,
         backgroundColor: '#000000',
         padding: 10,
+        margin: 10,
         flexDirection: 'row',
     },
     iconImage: {
-        flex: 0.25,
-        width: 50,
-        height: 40,
-        alignSelf: 'center',
+        flex: 1,
+        width: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     valueContainer: {
-        flex: 0.75,
+        flex: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     value: {
         fontSize: 20,
