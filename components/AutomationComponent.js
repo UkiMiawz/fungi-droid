@@ -9,8 +9,6 @@ import {
     Dimensions
 } from 'react-native';
 
-var width = Dimensions.get('window').width;
-
 class AutomationComponent extends Component {
     render() {
         return (

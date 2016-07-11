@@ -20,6 +20,7 @@ import HeaderComponent from './components/HeaderComponent'
 import LoadingComponent from './components/LoadingComponent'
 import StatusComponent from './components/StatusComponent'
 import AutomationComponent from './components/AutomationComponent'
+import DateComponent from './components/DateComponent'
 
 var FIREBASE_URL = "https://fungi-5edf1.firebaseio.com";
 
@@ -177,6 +178,7 @@ class AwesomeProject extends Component {
                     </View>
                     <View><StatusComponent /></View>
                     <View><AutomationComponent /></View>
+                    <View><DateComponent /></View>
                 </Image>
             </View>
         );

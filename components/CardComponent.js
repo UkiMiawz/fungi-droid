@@ -25,12 +25,24 @@ class CardComponent extends Component {
                 <View style={styles.valueContainer}>
                     <Text style={styles.value}>{this.props.value}</Text>
                 </View>
+                <View style={[styles.statusView]}>
+                    <View style={[styles.statusValue]}></View>
+                </View>
         </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    statusView: {
+        borderWidth: 1,
+        borderColor: '#818181',
+        height: 5,
+    },
+    statusValue: {
+        background: '#00ff00',
+        height: 4,
+    },
     cardView: {
         flex: 0.3,
         backgroundColor: '#000000',

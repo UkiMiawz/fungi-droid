@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "41662830641",
+    "firebase_url": "https://fungi-5edf1.firebaseio.com",
+    "project_id": "fungi-5edf1",
+    "storage_bucket": "fungi-5edf1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41662830641:android:bdda3018bb58ca0a",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41662830641-u68neqqblu7ifavo2r2u12dojferm5td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJo1i5_g3qWWcwrBO6nl4BGSHuGQUryzQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
