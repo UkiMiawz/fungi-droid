@@ -5,7 +5,8 @@ import {
     ListView,
     StyleSheet,
     Text,
-    View
+    View,
+    Dimensions
 } from 'react-native';
 import moment from 'moment';
 import tz from 'moment-timezone'
@@ -13,19 +14,16 @@ import tz from 'moment-timezone'
 var TIMEZONE = 'Europe/Berlin';
 var TIME_FORMAT = 'MMMM Do YYYY, hh:mm:ss';
 
+var width = Dimensions.get('window').width;
+
 class CardComponent extends Component {
     render() {
         var time = moment(this.props.timestamp).tz(TIMEZONE).format(TIME_FORMAT);
         return (
             <View style={[styles.cardView]}>
-                <View style={[styles.header, this.props.colorStyle]}>
-                    <Text style={styles.title}>{this.props.title} </Text>
-                </View>
+                <Image source={this.props.imageIcon} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
                 <View style={styles.valueContainer}>
                     <Text style={styles.value}>{this.props.value}</Text>
-                </View>
-                <View style={[styles.footer]}>
-                    <Text style={styles.dateFormat}>{time}</Text>
                 </View>
         </View>
         );
@@ -34,39 +32,28 @@ class CardComponent extends Component {
 
 const styles = StyleSheet.create({
     cardView: {
-        margin: 10,
-        backgroundColor: '#DFDFE1',
+        width: width*0.30,
+        backgroundColor: '#000000',
+        marginBottom: 10,
+        flexDirection: 'column',
     },
-    header: {
-        padding: 10,
-        alignSelf: 'stretch',
-    },
-    footer: {
-        borderTopColor: '#adadad',
-        borderTopWidth: StyleSheet.hairlineWidth,
-        alignSelf: 'stretch',
-        padding: 5,
+    iconImage: {
+        flex: 1,
+        width: 100,
+        height: 40,
+        alignSelf: 'center',
+        marginTop: 10,
     },
     valueContainer: {
         flex: 1,
         alignSelf: 'stretch',
-        padding: 20,
-    },
-    title: {
-        fontSize: 16,
-        marginBottom: 8,
-        color: '#ffffff',
-        textAlign: 'left',
+        margin: 20,
     },
     value: {
         fontSize: 28,
-        color: '#565962',
+        marginTop: -20,
+        color: '#ffffff',
         textAlign: 'center',
-    },
-    dateFormat: {
-        fontSize: 16,
-        color: '#565962',
-        textAlign: 'left',
     }
 });
 

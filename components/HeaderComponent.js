@@ -24,10 +24,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#00B1DA',
+        backgroundColor: '#000000',
         padding: 10,
+        marginBottom: 10,
     },
     headerText: {
+        fontFamily: 'CaviarDreams',
         fontSize: 20,
         color: '#ffffff',
     }

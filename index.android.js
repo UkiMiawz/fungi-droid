@@ -66,7 +66,8 @@ class HumidityComponent extends Component {
         {
             return (
                 <View>
-                    <CardComponent title="Humidity" value={this.state.items[0].humidity} timestamp={this.state.items[0].created_date} colorStyle={turquoise}/>
+                    <CardComponent title="Humidity" value={this.state.items[0].humidity + "%"} timestamp={this.state.items[0].created_date}
+                        imageIcon={require("./images/humidity.png")} />
                 </View>
             );
         }
@@ -107,7 +108,8 @@ class LuxComponent extends Component {
         {
             return (
                 <View>
-                    <CardComponent title="Lux" value={Math.round(this.state.items[0].lux * 100) / 100} timestamp={this.state.items[0].created_date} colorStyle={yolk}/>
+                    <CardComponent title="Lux" value={Math.round(this.state.items[0].lux)} timestamp={this.state.items[0].created_date}
+                        imageIcon={require("./images/light.png")}/>
                 </View>
             );
         }
@@ -148,7 +150,8 @@ class TemperatureComponent extends Component {
         {
             return (
                 <View>
-                    <CardComponent title="Temperature" value={this.state.items[0].temperature} timestamp={this.state.items[0].created_date} colorStyle={melon}/>
+                    <CardComponent title="Temperature" value={this.state.items[0].temperature + "°"} timestamp={this.state.items[0].created_date}
+                        imageIcon={require("./images/termometer.png")} />
                 </View>
             );
         }
@@ -162,31 +165,30 @@ class TemperatureComponent extends Component {
 class AwesomeProject extends Component {
     render() {
         return (
-            <View>
-                <HeaderComponent />
-                <View style={styles.bodyView}>
-                    <TemperatureComponent />
-                    <HumidityComponent />
-                    <LuxComponent />
-                </View>
+            <View style={styles.container}>
+                <Image source={require('./images/background.png')} style={styles.backgroundImage} resizeMode={Image.resizeMode.cover}>
+                    <HeaderComponent />
+                    <View style={styles.bodyView}>
+                        <TemperatureComponent />
+                        <HumidityComponent />
+                        <LuxComponent />
+                    </View>
+                </Image>
             </View>
         );
     }
 }
 
-var turquoise = { backgroundColor: '#01B9BB', }
-var melon = { backgroundColor: '#F25E42', }
-var yolk = { backgroundColor: '#F7D22B', }
-
 const styles = StyleSheet.create({
-    container: {
+    backgroundImage: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
+        width: null,
+        height: null,
     },
     bodyView: {
         margin: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     }
 });
 

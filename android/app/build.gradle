@@ -92,7 +92,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("/home/ukimiawz/UkiMiawz/AwesomeProject/android/app/my-release-key.keystore")
+            storeFile file("/home/ukimiawz/UkiMiawz/fungi-droid/android/app/my-release-key.keystore")
             storePassword "123456"
             keyAlias "fungi"
             keyPassword "123456"
