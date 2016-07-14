@@ -32,6 +32,7 @@ class ContainerProject extends Component {
             humidities: [],
             temperatures: [],
             luxes: [],
+            lightAutomations: [],
             loading: true
         }
     }
@@ -66,11 +67,23 @@ class ContainerProject extends Component {
                 limitToLast: 1
             }
         });
+
+        base.bindToState(GLOBAL.FIREBASE.FUNGI_AUTOMATION, {
+            context: this,
+            state: 'lightAutomations',
+            asArray: true,
+            queries: {
+                orderByChild: 'name',
+                equalTo: 'light',
+                limitToLast: 1
+            }
+        });
     }
 
     render() {
 
-        if(this.state.temperatures.length > 0 && this.state.humidities.length > 0 && this.state.luxes.length > 0)
+        if(this.state.temperatures.length > 0 && this.state.humidities.length > 0 && this.state.luxes.length > 0
+            && this.state.lightAutomations.length > 0)
         {
                 return (
                     <View style={styles.container}>
@@ -94,7 +107,7 @@ class ContainerProject extends Component {
                             </View>
                         </View>
                         <View><StatusComponent humidity={this.state.humidities[0].humidity} lux={this.state.luxes[0].lux} temperature={this.state.temperatures[0].temperature} /></View>
-                        <View><AutomationComponent /></View>
+                        <View><AutomationComponent lightAutomation={this.state.lightAutomations[0].value} /></View>
                         <View><DateComponent timestamp={this.state.humidities[0].created_date}/></View>
                         </Image>
                     </View>
