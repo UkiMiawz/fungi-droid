@@ -78,12 +78,14 @@ class ContainerProject extends Component {
                 limitToLast: 1
             }
         });
+
+        this.state.loading = false;
     }
 
     render() {
 
         if(this.state.temperatures.length > 0 && this.state.humidities.length > 0 && this.state.luxes.length > 0
-            && this.state.lightAutomations.length > 0)
+            && this.state.lightAutomations.length > 0 && this.state.loading == false)
         {
                 return (
                     <View style={styles.container}>
