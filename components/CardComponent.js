@@ -8,6 +8,7 @@ import {
     View,
     Dimensions
 } from 'react-native';
+import * as GLOBAL from './Globals';
 
 class CardComponent extends Component {
     render() {
@@ -31,11 +32,11 @@ calculatePercentage = function(value, limit){
 
 generateColor = function(value, minValue, maxValue) {
     if(value > maxValue)
-        return '#ff0000';
+        return GLOBAL.COLORS.RED;
     else if(value < minValue)
-        return "#ffff00";
+        return GLOBAL.COLORS.YELLOW;
     else
-        return "#00ff00";
+        return GLOBAL.COLORS.GREEN;
 }
 
 statusStyle = function(value, minValue, maxValue, limit) {

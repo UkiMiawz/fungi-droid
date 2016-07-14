@@ -21,26 +21,9 @@ import LoadingComponent from './components/LoadingComponent'
 import StatusComponent from './components/StatusComponent'
 import AutomationComponent from './components/AutomationComponent'
 import DateComponent from './components/DateComponent'
+import * as GLOBAL from './components/Globals';
 
-var FIREBASE_URL = "https://fungi-5edf1.firebaseio.com";
-
-var FUNGI_HUMIDITY = "fungi_humidity";
-var FUNGI_TEMPERATURE = "fungi_temperature";
-var FUNGI_LUX = "fungi_lux";
-
-var minTemperature = 18;
-var maxTemperature = 28;
-var limitTemperature = 50;
-
-var minHumidity = 60;
-var maxHumidity = 90;
-var limitHumidity = 100;
-
-var minLux = 90;
-var maxLux = 110;
-var limitLux = 200;
-
-var base = Rebase.createClass(FIREBASE_URL);
+var base = Rebase.createClass(GLOBAL.FIREBASE.URL);
 
 class ContainerProject extends Component {
     constructor(props){
@@ -54,7 +37,7 @@ class ContainerProject extends Component {
     }
 
     componentDidMount(){
-        base.bindToState(FUNGI_TEMPERATURE, {
+        base.bindToState(GLOBAL.FIREBASE.FUNGI_TEMPERATURE, {
             context: this,
             state: 'temperatures',
             asArray: true,
@@ -64,7 +47,7 @@ class ContainerProject extends Component {
             }
         });
 
-        base.bindToState(FUNGI_HUMIDITY, {
+        base.bindToState(GLOBAL.FIREBASE.FUNGI_HUMIDITY, {
             context: this,
             state: 'humidities',
             asArray: true,
@@ -74,7 +57,7 @@ class ContainerProject extends Component {
             }
         });
 
-        base.bindToState(FUNGI_LUX, {
+        base.bindToState(GLOBAL.FIREBASE.FUNGI_LUX, {
             context: this,
             state: 'luxes',
             asArray: true,
@@ -97,17 +80,17 @@ class ContainerProject extends Component {
                             <View>
                                 <CardComponent title="Temperature" value={this.state.temperatures[0].temperature + "°"}
                                 imageIcon={require("./images/termometer.png")}
-                                valueRaw={this.state.temperatures[0].temperature} min={minTemperature} max={maxTemperature} limit={limitTemperature}/>
+                                valueRaw={this.state.temperatures[0].temperature} min={GLOBAL.TEMPERATURE.MIN} max={GLOBAL.TEMPERATURE.MAX} limit={GLOBAL.TEMPERATURE.LIMIT}/>
                             </View>
                             <View>
                                 <CardComponent title="Humidity" value={this.state.humidities[0].humidity + "%"}
                                 imageIcon={require("./images/humidity.png")}
-                                valueRaw={this.state.humidities[0].humidity} min={minHumidity} max={maxHumidity} limit={limitHumidity}/>
+                                valueRaw={this.state.humidities[0].humidity} min={GLOBAL.HUMIDITY.MIN} max={GLOBAL.HUMIDITY.MAX} limit={GLOBAL.HUMIDITY.LIMIT}/>
                             </View>
                             <View>
                                 <CardComponent title="Lux" value={Math.round(this.state.luxes[0].lux)}
                                 imageIcon={require("./images/light.png")}
-                                valueRaw={this.state.luxes[0].lux} min={minLux} max={maxLux} limit={limitLux}/>
+                                valueRaw={this.state.luxes[0].lux} min={GLOBAL.LUX.MIN} max={GLOBAL.LUX.MAX} limit={GLOBAL.LUX.LIMIT}/>
                             </View>
                         </View>
                         <View><StatusComponent /></View>

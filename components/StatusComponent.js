@@ -13,7 +13,7 @@ class StatusComponent extends Component {
     render() {
         return (
             <View style={[styles.statusView]}>
-                <Image source={require("../images/spritFungi.png")} style={styles.iconImage} resizeMode={Image.resizeMode.cover}></Image>
+                <Image source={require("../images/spritFungi1.png")} style={styles.iconImage} resizeMode={Image.resizeMode.cover}></Image>
             </View>
     );
     }

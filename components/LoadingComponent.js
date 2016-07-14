@@ -12,6 +12,7 @@ class LoadingComponent extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Image source={require('../images/spritFungi.png')} style={styles.imageLoading} resizeMode={Image.resizeMode.contain}></Image>
                 <Text style={styles.textLoading}>
                     Loading {this.props.title} sensor data...
                 </Text>
@@ -29,9 +30,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#000000",
     },
     textLoading: {
-        fontSize: 30,
+        flex: 1,
+        fontSize: 20,
         color: "#ffffff"
-    }
+    },
+    imageLoading: {
+        flex: 1,
+        width: 300,
+        height: 200,
+    },
 });
 
 export default LoadingComponent;
