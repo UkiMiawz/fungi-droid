@@ -13,13 +13,13 @@ class AutomationComponent extends Component {
     render() {
         return (
             <View style={[styles.automationView]}>
-                <View style={[styles.cardView]}>
+                <View style={[styles.cardViewLight]}>
                     <Image source={require("../images/lightOn.png")} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
                     <View style={styles.valueContainer}>
                         <Text style={styles.value}>Turn Off</Text>
                     </View>
                 </View>
-                <View style={[styles.cardView]}>
+                <View style={[styles.cardViewWatering]}>
                     <Image source={require("../images/watering.png")} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
                     <View style={styles.valueContainer}>
                         <Text style={styles.value}>Watering</Text>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    cardView: {
+    cardViewLight: {
         borderWidth: 1,
         borderColor: '#ffffff',
         flex: 0.3,
@@ -46,6 +46,16 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         flexDirection: 'row',
+    },
+    cardViewWatering: {
+        borderWidth: 1,
+        borderColor: '#ffffff',
+        flex: 0.3,
+        backgroundColor: '#000000',
+        padding: 10,
+        margin: 10,
+        flexDirection: 'row',
+        opacity: 0.5,
     },
     iconImage: {
         flex: 1,

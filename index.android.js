@@ -39,95 +39,13 @@ var maxLux = 110;
 
 var base = Rebase.createClass(FIREBASE_URL);
 
-class HumidityComponent extends Component {
+class ContainerProject extends Component {
     constructor(props){
         super(props);
         this.state = {
-            items: [],
-            loading: true
-        }
-    }
-
-    componentDidMount(){
-        base.bindToState(FUNGI_HUMIDITY, {
-            context: this,
-            state: 'items',
-            asArray: true,
-            queries: {
-                orderByChild: 'timestamp',
-                limitToLast: 1
-            }
-        });
-    }
-
-    render() {
-        if (!this.state.loading) {
-            return this.renderLoadingView();
-        }
-
-        if(this.state.items.length > 0)
-        {
-            return (
-                <View>
-                    <CardComponent title="Humidity" value={this.state.items[0].humidity + "%"} timestamp={this.state.items[0].created_date}
-                        imageIcon={require("./images/humidity.png")} />
-                </View>
-            );
-        }
-
-        return (
-            <LoadingComponent title="humidity"/>
-        );
-    }
-}
-
-class LuxComponent extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            items: [],
-            loading: true
-        }
-    }
-
-    componentDidMount(){
-        base.bindToState(FUNGI_LUX, {
-            context: this,
-            state: 'items',
-            asArray: true,
-            queries: {
-                orderByChild: 'timestamp',
-                limitToLast: 1
-            }
-        });
-    }
-
-    render() {
-        if (!this.state.loading) {
-            return this.renderLoadingView();
-        }
-
-        if(this.state.items.length > 0)
-        {
-            return (
-                <View>
-                    <CardComponent title="Lux" value={Math.round(this.state.items[0].lux)} timestamp={this.state.items[0].created_date}
-                        imageIcon={require("./images/light.png")}/>
-                </View>
-            );
-        }
-
-        return (
-            <LoadingComponent title="lux"/>
-        );
-    }
-}
-
-class TemperatureComponent extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            items: [],
+            humidities: [],
+            temperatures: [],
+            luxes: [],
             loading: true
         }
     }
@@ -135,7 +53,27 @@ class TemperatureComponent extends Component {
     componentDidMount(){
         base.bindToState(FUNGI_TEMPERATURE, {
             context: this,
-            state: 'items',
+            state: 'temperatures',
+            asArray: true,
+            queries: {
+                orderByChild: 'timestamp',
+                limitToLast: 1
+            }
+        });
+
+        base.bindToState(FUNGI_HUMIDITY, {
+            context: this,
+            state: 'humidities',
+            asArray: true,
+            queries: {
+                orderByChild: 'timestamp',
+                limitToLast: 1
+            }
+        });
+
+        base.bindToState(FUNGI_LUX, {
+            context: this,
+            state: 'luxes',
             asArray: true,
             queries: {
                 orderByChild: 'timestamp',
@@ -145,22 +83,37 @@ class TemperatureComponent extends Component {
     }
 
     render() {
-        if (!this.state.loading) {
-            return this.renderLoadingView();
-        }
 
-        if(this.state.items.length > 0)
+        if(this.state.temperatures.length > 0 && this.state.humidities.length > 0 && this.state.luxes.length > 0)
         {
-            return (
-                <View>
-                    <CardComponent title="Temperature" value={this.state.items[0].temperature + "°"} timestamp={this.state.items[0].created_date}
-                        imageIcon={require("./images/termometer.png")} />
-                </View>
-            );
+                return (
+                    <View style={styles.container}>
+                        <Image source={require('./images/background.png')} style={styles.backgroundImage} resizeMode={Image.resizeMode.cover}>
+                        <HeaderComponent />
+                        <View style={styles.bodyView}>
+                            <View>
+                                <CardComponent title="Temperature" value={this.state.temperatures[0].temperature + "°"} timestamp={this.state.temperatures[0].created_date}
+                                imageIcon={require("./images/termometer.png")} />
+                            </View>
+                            <View>
+                                <CardComponent title="Humidity" value={this.state.humidities[0].humidity + "%"} timestamp={this.state.humidities[0].created_date}
+                                imageIcon={require("./images/humidity.png")} />
+                            </View>
+                            <View>
+                                <CardComponent title="Lux" value={Math.round(this.state.luxes[0].lux)} timestamp={this.state.luxes[0].created_date}
+                                imageIcon={require("./images/light.png")}/>
+                            </View>
+                        </View>
+                        <View><StatusComponent /></View>
+                        <View><AutomationComponent /></View>
+                        <View><DateComponent /></View>
+                        </Image>
+                    </View>
+                );
         }
 
         return (
-            <LoadingComponent title="temperature"/>
+            <LoadingComponent title="all"/>
         );
     }
 }
@@ -168,19 +121,7 @@ class TemperatureComponent extends Component {
 class AwesomeProject extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <Image source={require('./images/background.png')} style={styles.backgroundImage} resizeMode={Image.resizeMode.cover}>
-                    <HeaderComponent />
-                    <View style={styles.bodyView}>
-                        <TemperatureComponent />
-                        <HumidityComponent />
-                        <LuxComponent />
-                    </View>
-                    <View><StatusComponent /></View>
-                    <View><AutomationComponent /></View>
-                    <View><DateComponent /></View>
-                </Image>
-            </View>
+            <ContainerProject />
         );
     }
 }

@@ -8,17 +8,9 @@ import {
     View,
     Dimensions
 } from 'react-native';
-import moment from 'moment';
-import tz from 'moment-timezone'
-
-var TIMEZONE = 'Europe/Berlin';
-var TIME_FORMAT = 'MMMM Do YYYY, hh:mm:ss';
-
-var width = Dimensions.get('window').width;
 
 class CardComponent extends Component {
     render() {
-        var time = moment(this.props.timestamp).tz(TIMEZONE).format(TIME_FORMAT);
         return (
             <View style={[styles.cardView]}>
                 <Image source={this.props.imageIcon} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
@@ -40,7 +32,8 @@ const styles = StyleSheet.create({
         height: 5,
     },
     statusValue: {
-        background: '#00ff00',
+        backgroundColor: '#00ff00',
+        width: 50,
         height: 4,
     },
     cardView: {
