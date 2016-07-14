@@ -7,19 +7,56 @@ import {
     Text,
     View,
     Animated,
+    TouchableNativeFeedback,
 } from 'react-native';
+import Rebase from 're-base';
+import moment from 'moment';
+import tz from 'moment-timezone';
+
 import * as GLOBAL from './Globals';
 
+var TIMEZONE = 'Europe/Berlin';
+var DATE_FORMAT = 'YYYY-MM-DD hh:mm:ss';
+
+var timestampText = moment().unix();
+var timeText = moment().tz(TIMEZONE).format(DATE_FORMAT);
+
+var base = Rebase.createClass(GLOBAL.FIREBASE.URL);
+
 class AutomationComponent extends Component {
+
+    _onPressLight = function(value){
+        var newValue = 0;
+        if(value == 0)
+            newValue = 1;
+
+        base.post(GLOBAL.FIREBASE.FUNGI_AUTOMATION, {
+                data: this.props.lightAutomations.concat([{
+                    name: GLOBAL.FUNGI_AUTOMATION.LIGHT,
+                    value: newValue,
+                    timestamp: timestampText,
+                    created_at: timeText
+                }]),
+                context: this,
+                then: () => {
+                    console.log('POSTED TO LIGHT');
+                }
+        });
+    }
+
     render() {
         return (
             <View style={[styles.automationView]}>
-                <Animated.View style={automationBox(this.props.lightAutomation)}>
-                    <Image source={lightImage(this.props.lightAutomation)} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
-                    <View style={styles.valueContainer}>
-                        <Text style={textStyle(this.props.lightAutomation)}>{textValue(this.props.lightAutomation)}</Text>
+                <TouchableNativeFeedback
+                    onPress={() => {this._onPressLight(this.props.lightAutomation)}}
+                    background={TouchableNativeFeedback.SelectableBackground()}>
+                    <View style={automationBox(this.props.lightAutomation)}>
+                        <Image source={lightImage(this.props.lightAutomation)} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
+                        <View style={styles.valueContainer}>
+                            <Text style={textStyle(this.props.lightAutomation)}>{textValue(this.props.lightAutomation)}</Text>
+                        </View>
                     </View>
-                </Animated.View>
+                </TouchableNativeFeedback>
                 <View style={[styles.cardViewWatering]}>
                     <Image source={require("../images/watering.png")} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
                     <View style={styles.valueContainer}>
