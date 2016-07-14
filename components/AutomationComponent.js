@@ -6,7 +6,7 @@ import {
     StyleSheet,
     Text,
     View,
-    Dimensions
+    Animated,
 } from 'react-native';
 import * as GLOBAL from './Globals';
 
@@ -14,12 +14,12 @@ class AutomationComponent extends Component {
     render() {
         return (
             <View style={[styles.automationView]}>
-                <View style={automationBox(this.props.lightAutomation)}>
+                <Animated.View style={automationBox(this.props.lightAutomation)}>
                     <Image source={lightImage(this.props.lightAutomation)} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
                     <View style={styles.valueContainer}>
                         <Text style={textStyle(this.props.lightAutomation)}>{textValue(this.props.lightAutomation)}</Text>
                     </View>
-                </View>
+                </Animated.View>
                 <View style={[styles.cardViewWatering]}>
                     <Image source={require("../images/watering.png")} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
                     <View style={styles.valueContainer}>

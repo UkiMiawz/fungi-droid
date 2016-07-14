@@ -6,14 +6,14 @@ import {
     StyleSheet,
     Text,
     View,
-    Dimensions
+    Animated,
 } from 'react-native';
 import * as GLOBAL from './Globals';
 
 class CardComponent extends Component {
     render() {
         return (
-            <View style={[styles.cardView]}>
+            <Animated.View style={[styles.cardView]}>
                 <Image source={this.props.imageIcon} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
                 <View style={styles.valueContainer}>
                     <Text style={styles.value}>{this.props.value}</Text>
@@ -21,7 +21,7 @@ class CardComponent extends Component {
                 <View style={[styles.statusView]}>
                     <View style={statusStyle(this.props.valueRaw, this.props.min, this.props.max, this.props.limit)}></View>
                 </View>
-        </View>
+        </Animated.View>
         );
     }
 }
