@@ -93,7 +93,7 @@ class ContainerProject extends Component {
                                 valueRaw={this.state.luxes[0].lux} min={GLOBAL.LUX.MIN} max={GLOBAL.LUX.MAX} limit={GLOBAL.LUX.LIMIT}/>
                             </View>
                         </View>
-                        <View><StatusComponent /></View>
+                        <View><StatusComponent humidity={this.state.humidities[0].humidity} lux={this.state.luxes[0].lux} temperature={this.state.temperatures[0].temperature} /></View>
                         <View><AutomationComponent /></View>
                         <View><DateComponent timestamp={this.state.humidities[0].created_date}/></View>
                         </Image>

@@ -14,7 +14,7 @@ class LoadingComponent extends Component {
             <View style={styles.container}>
                 <Image source={require('../images/spritFungi.png')} style={styles.imageLoading} resizeMode={Image.resizeMode.contain}></Image>
                 <Text style={styles.textLoading}>
-                    Loading {this.props.title} sensor data...
+                    Loading {this.props.title} sensors data...
                 </Text>
             </View>
         );
