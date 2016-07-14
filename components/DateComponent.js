@@ -8,15 +8,27 @@ import {
     View,
     Dimensions
 } from 'react-native';
+import moment from 'moment';
+import tz from 'moment-timezone'
+
+var TIMEZONE = 'Europe/Berlin';
+var DATE_FORMAT = 'MMM.DD.YYYY';
+var TIME_FORMAT = 'hh:mm:ss';
 
 class DateComponent extends Component {
+
     render() {
+
+        var timestampText = moment(this.props.timestamp);
+        var dateText = timestampText.tz(TIMEZONE).format(DATE_FORMAT);
+        var timeText = timestampText.tz(TIMEZONE).format(TIME_FORMAT);
+
         return (
             <View style={[styles.dateView]}>
                 <View style={[styles.cardView]}>
                     <View style={styles.valueContainer}>
-                        <Text style={styles.hour}>11:45:19</Text>
-                        <Text style={styles.date}>JUL.03.2016</Text>
+                        <Text style={styles.hour}>{timeText}</Text>
+                        <Text style={styles.date}>{dateText}</Text>
                         <Text style={styles.text}>Last Server Sync</Text>
                     </View>
                 </View>

@@ -30,12 +30,15 @@ var FUNGI_LUX = "fungi_lux";
 
 var minTemperature = 18;
 var maxTemperature = 28;
+var limitTemperature = 50;
 
 var minHumidity = 60;
 var maxHumidity = 90;
+var limitHumidity = 100;
 
 var minLux = 90;
 var maxLux = 110;
+var limitLux = 200;
 
 var base = Rebase.createClass(FIREBASE_URL);
 
@@ -92,21 +95,24 @@ class ContainerProject extends Component {
                         <HeaderComponent />
                         <View style={styles.bodyView}>
                             <View>
-                                <CardComponent title="Temperature" value={this.state.temperatures[0].temperature + "°"} timestamp={this.state.temperatures[0].created_date}
-                                imageIcon={require("./images/termometer.png")} />
+                                <CardComponent title="Temperature" value={this.state.temperatures[0].temperature + "°"}
+                                imageIcon={require("./images/termometer.png")}
+                                valueRaw={this.state.temperatures[0].temperature} min={minTemperature} max={maxTemperature} limit={limitTemperature}/>
                             </View>
                             <View>
-                                <CardComponent title="Humidity" value={this.state.humidities[0].humidity + "%"} timestamp={this.state.humidities[0].created_date}
-                                imageIcon={require("./images/humidity.png")} />
+                                <CardComponent title="Humidity" value={this.state.humidities[0].humidity + "%"}
+                                imageIcon={require("./images/humidity.png")}
+                                valueRaw={this.state.humidities[0].humidity} min={minHumidity} max={maxHumidity} limit={limitHumidity}/>
                             </View>
                             <View>
-                                <CardComponent title="Lux" value={Math.round(this.state.luxes[0].lux)} timestamp={this.state.luxes[0].created_date}
-                                imageIcon={require("./images/light.png")}/>
+                                <CardComponent title="Lux" value={Math.round(this.state.luxes[0].lux)}
+                                imageIcon={require("./images/light.png")}
+                                valueRaw={this.state.luxes[0].lux} min={minLux} max={maxLux} limit={limitLux}/>
                             </View>
                         </View>
                         <View><StatusComponent /></View>
                         <View><AutomationComponent /></View>
-                        <View><DateComponent /></View>
+                        <View><DateComponent timestamp={this.state.humidities[0].created_date}/></View>
                         </Image>
                     </View>
                 );

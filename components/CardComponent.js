@@ -18,10 +18,31 @@ class CardComponent extends Component {
                     <Text style={styles.value}>{this.props.value}</Text>
                 </View>
                 <View style={[styles.statusView]}>
-                    <View style={[styles.statusValue]}></View>
+                    <View style={statusStyle(this.props.valueRaw, this.props.min, this.props.max, this.props.limit)}></View>
                 </View>
         </View>
         );
+    }
+}
+
+calculatePercentage = function(value, limit){
+    return Math.round((value / limit) * 100);
+}
+
+generateColor = function(value, minValue, maxValue) {
+    if(value > maxValue)
+        return '#ff0000';
+    else if(value < minValue)
+        return "#ffff00";
+    else
+        return "#00ff00";
+}
+
+statusStyle = function(value, minValue, maxValue, limit) {
+    return {
+        backgroundColor: generateColor(value, minValue, maxValue),
+        height: 4,
+        width: calculatePercentage(value, limit),
     }
 }
 
@@ -30,11 +51,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#818181',
         height: 5,
-    },
-    statusValue: {
-        backgroundColor: '#00ff00',
-        width: 50,
-        height: 4,
     },
     cardView: {
         flex: 0.3,
