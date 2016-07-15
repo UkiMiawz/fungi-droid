@@ -27,7 +27,14 @@ class CardComponent extends Component {
 }
 
 calculatePercentage = function(value, limit){
-    return Math.round((value / limit) * 100);
+    var percentage = Math.round((value / limit) * 100);
+    if(percentage > 100){
+        percentage = 100;
+    }
+    if(percentage < 0){
+        percentage = 0;
+    }
+    return percentage;
 }
 
 generateColor = function(value, minValue, maxValue) {
