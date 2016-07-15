@@ -30,13 +30,14 @@ class AutomationComponent extends Component {
         if(value == 0)
             newValue = 1;
 
-        base.post(GLOBAL.FIREBASE.FUNGI_AUTOMATION, {
-                data: this.props.lightAutomations.concat([{
+        base.push(GLOBAL.FIREBASE.FUNGI_AUTOMATION, {
+                data: {
                     name: GLOBAL.FUNGI_AUTOMATION.LIGHT,
                     value: newValue,
                     timestamp: timestampText,
-                    created_at: timeText
-                }]),
+                    created_at: timeText,
+                    client: "android"
+                },
                 context: this,
                 then: () => {
                     console.log('POSTED TO LIGHT');
