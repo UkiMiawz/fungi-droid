@@ -60,6 +60,7 @@ class SettingsComponent extends Component {
 
     _setModalVisible(visible) {
         this.setState({modalVisible: visible});
+        this.state.reload = true;
     }
 
     _onPressSubmit = function(){
@@ -69,16 +70,16 @@ class SettingsComponent extends Component {
                     created_at: timeText,
                     client: "android",
                     param_humidity: {
-                      max: this.state.humidity_max,
-                      min: this.state.humidity_min
+                      max: parseInt(this.state.humidity_max),
+                      min: parseInt(this.state.humidity_min)
                     },
                     param_lux: {
-                      max: this.state.lux_max,
-                      min: this.state.lux_min
+                      max: parseInt(this.state.lux_max),
+                      min: parseInt(this.state.lux_min)
                     },
                     param_temperature: {
-                      max: this.state.temperature_max,
-                      min: this.state.temperature_min
+                      max: parseInt(this.state.temperature_max),
+                      min: parseInt(this.state.temperature_min)
                     },
                 },
                 context: this,
@@ -87,7 +88,7 @@ class SettingsComponent extends Component {
                 }
         });
 
-        this.state.reload = true;
+        this._setModalVisible(!this.state.modalVisible);
     }
 
     render() {
@@ -120,40 +121,57 @@ class SettingsComponent extends Component {
                         </Image>
                       </View>
                       <View style={styles.formContainer}>
-                        <Text>Temperature</Text>
-                        <TextInput
-                          style={styles.TextInput}
-                          onChangeText={(temperature_min) => this.setState({temperature_min})}
-                          value={this.state.temperature_min.toString()}
-                        />
-                        <TextInput
-                          style={styles.TextInput}
-                          onChangeText={(temperature_max) => this.setState({temperature_max})}
-                          value={this.state.temperature_max.toString()}
-                        />
-                        <Text>Humidity</Text>
-                        <TextInput
-                          style={styles.TextInput}
-                          onChangeText={(humidity_min) => this.setState({humidity_min})}
-                          value={this.state.humidity_min.toString()}
-                        />
-                        <TextInput
-                          style={styles.TextInput}
-                          onChangeText={(humidity_max) => this.setState({humidity_max})}
-                          value={this.state.humidity_max.toString()}
-                        />
-                        <Text>Lux</Text>
-                        <TextInput
-                          style={styles.TextInput}
-                          onChangeText={(lux_min) => this.setState({lux_min})}
-                          value={this.state.lux_min.toString()}
-                        />
-                        <TextInput
-                          style={styles.TextInput}
-                          onChangeText={(lux_max) => this.setState({lux_max})}
-                          value={this.state.lux_max.toString()}
-                        />
+
+                        <Text style={styles.textTitle}>Temperature</Text>
+                        <View style={styles.textForms}>
+                          <Text style={styles.textLabel}>Min</Text>
+                          <TextInput
+                            style={styles.textInput}
+                            onChangeText={(temperature_min) => this.setState({temperature_min})}
+                            value={this.state.temperature_min.toString()}
+                          />
+                          <Text style={styles.textLabel}>Max</Text>
+                          <TextInput
+                            style={styles.textInput}
+                            onChangeText={(temperature_max) => this.setState({temperature_max})}
+                            value={this.state.temperature_max.toString()}
+                          />
+                        </View>
+
+                        <Text style={styles.textTitle}>Humidity</Text>
+                        <View style={styles.textForms}>
+                          <Text style={styles.textLabel}>Min</Text>
+                          <TextInput
+                            style={styles.textInput}
+                            onChangeText={(humidity_min) => this.setState({humidity_min})}
+                            value={this.state.humidity_min.toString()}
+                          />
+                          <Text style={styles.textLabel}>Max</Text>
+                          <TextInput
+                            style={styles.textInput}
+                            onChangeText={(humidity_max) => this.setState({humidity_max})}
+                            value={this.state.humidity_max.toString()}
+                          />
+                        </View>
+
+                        <Text style={styles.textTitle}>Lux</Text>
+                        <View style={styles.textForms}>
+                          <Text style={styles.textLabel}>Min</Text>
+                          <TextInput
+                            style={styles.textInput}
+                            onChangeText={(lux_min) => this.setState({lux_min})}
+                            value={this.state.lux_min.toString()}
+                          />
+                          <Text style={styles.textLabel}>Max</Text>
+                          <TextInput
+                            style={styles.textInput}
+                            onChangeText={(lux_max) => this.setState({lux_max})}
+                            value={this.state.lux_max.toString()}
+                          />
+                        </View>
+
                       </View>
+
                       <View style={styles.buttonContainer}>
                         <TouchableNativeFeedback
                             onPress={() => {this._setModalVisible(!this.state.modalVisible)}}
@@ -199,6 +217,16 @@ class SettingsComponent extends Component {
 }
 
 const styles = StyleSheet.create({
+    textForms: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      justifyContent: 'center',
+      marginTop: 20,
+      marginBottom: 20,
+    },
+    textTitle: {
+      fontSize: 16,
+    },
     bgImage: {
       flex: 1,
       width: null,
@@ -207,14 +235,23 @@ const styles = StyleSheet.create({
     formContainer: {
       flex: 1,
       margin: 10,
+      marginTop: 30,
     },
     buttonContainer: {
       flexDirection: 'row',
     },
-    textInput: {
-      height: 40,
+    textLabel: {
+      flex: 1,
+      margin: 10,
       borderColor: 'gray',
       borderWidth: 1,
+    },
+    textInput: {
+      flex: 1,
+      height: 35,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginRight: 20,
     },
     containerHeader: {
       flex: 0.3,
