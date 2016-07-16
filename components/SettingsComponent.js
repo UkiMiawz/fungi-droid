@@ -12,10 +12,18 @@ import {
     ScrollView,
 } from 'react-native';
 import Rebase from 're-base';
+import moment from 'moment';
+import tz from 'moment-timezone';
 
 import * as GLOBAL from './Globals';
 
 var base = Rebase.createClass(GLOBAL.FIREBASE.URL);
+
+var TIMEZONE = 'Europe/Berlin';
+var DATE_FORMAT = 'YYYY-MM-DD hh:mm:ss';
+
+var timestampText = moment().unix();
+var timeText = moment().tz(TIMEZONE).format(DATE_FORMAT);
 
 class SettingsComponent extends Component {
 
@@ -52,8 +60,44 @@ class SettingsComponent extends Component {
         this.setState({modalVisible: visible});
     }
 
+    _onPressSubmit = function(){
+        base.push(GLOBAL.FIREBASE.FUNGI_PARAMETERS, {
+                data: {
+                    timestamp: timestampText,
+                    created_at: timeText,
+                    client: "android",
+                    param_humidity: {
+                      max: this.state.humidity_max,
+                      min: this.state.humidity_min
+                    },
+                    param_lux: {
+                      max: this.state.lux_max,
+                      min: this.state.lux_min
+                    },
+                    param_temperature: {
+                      max: this.state.temperature_max,
+                      min: this.state.temperature_min
+                    },
+                },
+                context: this,
+                then: () => {
+                    console.log('POSTED TO PARAMETERS');
+                }
+        });
+    }
+
     render() {
       if(this.state.loading == false && this.state.parameters.length > 0){
+
+        this.state.temperature_max = this.state.parameters[0].param_temperature.max;
+        this.state.temperature_min = this.state.parameters[0].param_temperature.min;
+
+        this.state.humidity_max = this.state.parameters[0].param_humidity.max;
+        this.state.humidity_min = this.state.parameters[0].param_humidity.min;
+
+        this.state.lux_max = this.state.parameters[0].param_lux.max;
+        this.state.lux_min = this.state.parameters[0].param_lux.min;
+
         return (
             <View>
                 <Modal
@@ -70,36 +114,37 @@ class SettingsComponent extends Component {
                       <View style={styles.formContainer}>
                         <Text>Temperature</Text>
                         <TextInput
+                          editable = {true}
                           style={styles.TextInput}
                           onChangeText={(temperature_min) => this.setState({temperature_min})}
-                          value={this.state.parameters[0].param_temperature.min.toString()}
+                          value={this.state.temperature_min.toString()}
                         />
                         <TextInput
                           style={styles.TextInput}
                           onChangeText={(temperature_max) => this.setState({temperature_max})}
-                          value={this.state.parameters[0].param_temperature.max.toString()}
+                          value={this.state.temperature_max.toString()}
                         />
                         <Text>Humidity</Text>
                         <TextInput
                           style={styles.TextInput}
                           onChangeText={(humidity_min) => this.setState({humidity_min})}
-                          value={this.state.parameters[0].param_humidity.min.toString()}
+                          value={this.state.humidity_min.toString()}
                         />
                         <TextInput
                           style={styles.TextInput}
                           onChangeText={(humidity_max) => this.setState({humidity_max})}
-                          value={this.state.parameters[0].param_humidity.max.toString()}
+                          value={this.state.humidity_max.toString()}
                         />
                         <Text>Lux</Text>
                         <TextInput
                           style={styles.TextInput}
                           onChangeText={(lux_min) => this.setState({lux_min})}
-                          value={this.state.parameters[0].param_lux.min.toString()}
+                          value={this.state.lux_min.toString()}
                         />
                         <TextInput
                           style={styles.TextInput}
                           onChangeText={(lux_max) => this.setState({lux_max})}
-                          value={this.state.parameters[0].param_lux.max.toString()}
+                          value={this.state.lux_max.toString()}
                         />
                       </View>
                       <View style={styles.buttonContainer}>
@@ -113,7 +158,7 @@ class SettingsComponent extends Component {
                            </View>
                        </TouchableNativeFeedback>
                        <TouchableNativeFeedback
-                           onPress={() => {this._setModalVisible(!this.state.modalVisible)}}
+                           onPress={() => {this._onPressSubmit()}}
                           background={TouchableNativeFeedback.SelectableBackground()}>
                           <View style={styles.container}>
                               <View style={styles.valueContainer}>
