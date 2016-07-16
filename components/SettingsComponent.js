@@ -23,7 +23,7 @@ class SettingsComponent extends Component {
 
     render() {
         return (
-            <View style={styles.valueContainer}>
+            <View style={styles.container}>
                 <Modal
                     animationType={"slide"}
                     transparent={true}
@@ -33,29 +33,40 @@ class SettingsComponent extends Component {
                     <TouchableNativeFeedback
                         onPress={() => {this._setModalVisible(!this.state.modalVisible)}}
                         background={TouchableNativeFeedback.SelectableBackground()}>
-                        <View style={styles.container}>
-                            <View style={styles.valueContainer}>
+                        <View style={styles.containerModal}>
+                            <View>
                                 <Text style={styles.textSetting}>Settings</Text>
                             </View>
                         </View>
                     </TouchableNativeFeedback>
                 </Modal>
+            <View>
                 <TouchableNativeFeedback
                     onPress={() => {this._setModalVisible(!this.state.modalVisible)}}
                     background={TouchableNativeFeedback.SelectableBackground()}>
-                    <View style={styles.container}>
+                    <View style={styles.containerBox}>
+                        <Image source={require("../images/settings.png")} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
                         <View style={styles.valueContainer}>
                             <Text style={styles.textSetting}>Settings</Text>
                         </View>
                     </View>
                 </TouchableNativeFeedback>
-
+</View>
             </View>
     );
     }
 }
 
 const styles = StyleSheet.create({
+    containerModal: {
+        borderWidth: 1,
+        borderColor: '#555555',
+        flex: 1,
+        backgroundColor: '#ffffff',
+        padding: 10,
+        margin: 10,
+        flexDirection: 'row',
+    },
     container: {
         borderWidth: 1,
         borderColor: '#ffffff',
@@ -64,6 +75,19 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         flexDirection: 'row',
+    },
+    containerBox: {
+        flex: 0.3,
+        width: 170,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    iconImage: {
+        flex: 1,
+        width: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     textSetting: {
         fontSize: 20,
@@ -74,6 +98,11 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 300,
         height: 200,
+    },
+    valueContainer: {
+        flex: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
