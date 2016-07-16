@@ -11,7 +11,8 @@ import {
     ListView,
     StyleSheet,
     Text,
-    View
+    View,
+    ScrollView
 } from 'react-native';
 import Rebase from 're-base';
 
@@ -88,7 +89,7 @@ class ContainerProject extends Component {
             && this.state.lightAutomations.length > 0 && this.state.loading == false)
         {
                 return (
-                    <View style={styles.container}>
+                    <ScrollView contentContainerStyle={styles.container}>
                         <Image source={require('./images/background.png')} style={styles.backgroundImage} resizeMode={Image.resizeMode.cover}>
                         <HeaderComponent />
                         <View style={styles.bodyView}>
@@ -116,7 +117,7 @@ class ContainerProject extends Component {
                                 lightAutomation={this.state.lightAutomations[0].value} /></View>
                         <View><DateComponent timestamp={this.state.humidities[0].created_date}/></View>
                         </Image>
-                    </View>
+                    </ScrollView>
                 );
         }
 

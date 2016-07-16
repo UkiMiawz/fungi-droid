@@ -13,6 +13,7 @@ import Rebase from 're-base';
 import moment from 'moment';
 import tz from 'moment-timezone';
 
+import SettingsComponent from './SettingsComponent';
 import * as GLOBAL from './Globals';
 
 var TIMEZONE = 'Europe/Berlin';
@@ -58,12 +59,7 @@ class AutomationComponent extends Component {
                         </View>
                     </View>
                 </TouchableNativeFeedback>
-                <View style={[styles.cardViewWatering]}>
-                    <Image source={require("../images/watering.png")} style={styles.iconImage} resizeMode={Image.resizeMode.contain}></Image>
-                    <View style={styles.valueContainer}>
-                        <Text style={textStyle(0)}>Watering</Text>
-                    </View>
-                </View>
+                <SettingsComponent />
             </View>
 
     );
