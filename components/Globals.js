@@ -5,6 +5,7 @@ module.exports = {
         FUNGI_TEMPERATURE: "fungi_temperature",
         FUNGI_LUX: "fungi_lux",
         FUNGI_AUTOMATION: "fungi_automation",
+        FUNGI_PARAMETERS: "fungi_parameters",
     },
     FUNGI_AUTOMATION: {
       LIGHT: "light",
