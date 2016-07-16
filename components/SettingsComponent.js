@@ -39,6 +39,7 @@ class SettingsComponent extends Component {
             humidity_min: 0,
             temperature_max: 0,
             temperature_min: 0,
+            reload: false,
         }
     }
 
@@ -54,6 +55,7 @@ class SettingsComponent extends Component {
         });
 
         this.state.loading = false;
+        this.state.reload = true;
     }
 
     _setModalVisible(visible) {
@@ -84,19 +86,25 @@ class SettingsComponent extends Component {
                     console.log('POSTED TO PARAMETERS');
                 }
         });
+
+        this.state.reload = true;
     }
 
     render() {
       if(this.state.loading == false && this.state.parameters.length > 0){
 
-        this.state.temperature_max = this.state.parameters[0].param_temperature.max;
-        this.state.temperature_min = this.state.parameters[0].param_temperature.min;
+        if(this.state.reload){
+          this.state.temperature_max = this.state.parameters[0].param_temperature.max;
+          this.state.temperature_min = this.state.parameters[0].param_temperature.min;
 
-        this.state.humidity_max = this.state.parameters[0].param_humidity.max;
-        this.state.humidity_min = this.state.parameters[0].param_humidity.min;
+          this.state.humidity_max = this.state.parameters[0].param_humidity.max;
+          this.state.humidity_min = this.state.parameters[0].param_humidity.min;
 
-        this.state.lux_max = this.state.parameters[0].param_lux.max;
-        this.state.lux_min = this.state.parameters[0].param_lux.min;
+          this.state.lux_max = this.state.parameters[0].param_lux.max;
+          this.state.lux_min = this.state.parameters[0].param_lux.min;
+
+          this.state.reload = false;
+        }
 
         return (
             <View>
@@ -114,7 +122,6 @@ class SettingsComponent extends Component {
                       <View style={styles.formContainer}>
                         <Text>Temperature</Text>
                         <TextInput
-                          editable = {true}
                           style={styles.TextInput}
                           onChangeText={(temperature_min) => this.setState({temperature_min})}
                           value={this.state.temperature_min.toString()}
