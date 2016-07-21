@@ -17,16 +17,17 @@ import tz from 'moment-timezone';
 
 import * as GLOBAL from './Globals';
 
+/* Component to change thresholds parameters for the sensors value */
+
+//firebase client
 var base = Rebase.createClass(GLOBAL.FIREBASE.URL);
 
-var TIMEZONE = 'Europe/Berlin';
-var DATE_FORMAT = 'YYYY-MM-DD hh:mm:ss';
-
 var timestampText = moment().unix();
-var timeText = moment().tz(TIMEZONE).format(DATE_FORMAT);
+var timeText = moment().tz(GLOBAL.TIMEZONE.LOCAL_TIMEZONE).format(GLOBAL.TIMEZONE.DATE_FORMAT);
 
 class SettingsComponent extends Component {
 
+    //set default value otherwise its null value error
     constructor(props){
         super(props);
         this.state = {
@@ -44,6 +45,8 @@ class SettingsComponent extends Component {
     }
 
     componentDidMount(){
+
+        //load and bind last parameters value
         base.bindToState(GLOBAL.FIREBASE.FUNGI_PARAMETERS, {
             context: this,
             state: 'parameters',
@@ -55,14 +58,17 @@ class SettingsComponent extends Component {
         });
 
         this.state.loading = false;
+        //detect whether the view need reload or not after a change
         this.state.reload = true;
     }
 
+    //show or hide modal window
     _setModalVisible(visible) {
         this.setState({modalVisible: visible});
         this.state.reload = true;
     }
 
+    //submit new parameters value to firebase
     _onPressSubmit = function(){
         base.push(GLOBAL.FIREBASE.FUNGI_PARAMETERS, {
                 data: {
@@ -95,6 +101,7 @@ class SettingsComponent extends Component {
       if(this.state.loading == false && this.state.parameters.length > 0){
 
         if(this.state.reload){
+          //if there are changes, reload textbox values with values from firebase bindings
           this.state.temperature_max = this.state.parameters[0].param_temperature.max;
           this.state.temperature_min = this.state.parameters[0].param_temperature.min;
 

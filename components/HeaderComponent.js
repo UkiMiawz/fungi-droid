@@ -8,6 +8,8 @@ import {
     View
 } from 'react-native';
 
+/* App header component, no logic here */
+
 class HeaderComponent extends Component {
     render() {
         return (

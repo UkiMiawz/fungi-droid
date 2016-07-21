@@ -11,17 +11,15 @@ import {
 import moment from 'moment';
 import tz from 'moment-timezone'
 
-var TIMEZONE = 'Europe/Berlin';
-var DATE_FORMAT = 'MMM.DD.YYYY';
-var TIME_FORMAT = 'hh:mm:ss';
+/* Component for the last server sync label on the bottom of the app */
 
 class DateComponent extends Component {
 
     render() {
 
         var timestampText = moment(this.props.timestamp);
-        var dateText = timestampText.tz(TIMEZONE).format(DATE_FORMAT);
-        var timeText = timestampText.tz(TIMEZONE).format(TIME_FORMAT);
+        var dateText = timestampText.tz(GLOBAL.TIMEZONE.LOCAL_TIMEZONE).format(GLOBAL.TIMEZONE.DATE_ONLY_FORMAT);
+        var timeText = timestampText.tz(GLOBAL.TIMEZONE.LOCAL_TIMEZONE).format(GLOBAL.TIMEZONE.TIME_ONLY_FORMAT);
 
         return (
             <View style={[styles.dateView]}>
@@ -33,8 +31,7 @@ class DateComponent extends Component {
                     </View>
                 </View>
             </View>
-
-    );
+          );
     }
 }
 

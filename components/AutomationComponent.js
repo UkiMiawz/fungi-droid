@@ -16,12 +16,13 @@ import tz from 'moment-timezone';
 import SettingsComponent from './SettingsComponent';
 import * as GLOBAL from './Globals';
 
-var TIMEZONE = 'Europe/Berlin';
-var DATE_FORMAT = 'YYYY-MM-DD hh:mm:ss';
+/* Component for the light button to trigger light on or off */
 
+//calculate timestamp
 var timestampText = moment().unix();
-var timeText = moment().tz(TIMEZONE).format(DATE_FORMAT);
+var timeText = moment().tz(GLOBAL.TIMEZONE.LOCAL_TIMEZONE).format(GLOBAL.TIMEZONE.DATE_FORMAT);
 
+//firebase client
 var base = Rebase.createClass(GLOBAL.FIREBASE.URL);
 
 class AutomationComponent extends Component {
@@ -31,6 +32,7 @@ class AutomationComponent extends Component {
         if(value == 0)
             newValue = 1;
 
+        //push automation data to firebase on pressing light button in the app
         base.push(GLOBAL.FIREBASE.FUNGI_AUTOMATION, {
                 data: {
                     name: GLOBAL.FUNGI_AUTOMATION.LIGHT,
@@ -66,6 +68,7 @@ class AutomationComponent extends Component {
     }
 }
 
+//generate light image on the light button
 lightImage = function(value){
     if(value == 0)
         return require("../images/lightOn.png");
@@ -73,6 +76,7 @@ lightImage = function(value){
         return require("../images/lightOff.png");
 }
 
+//generate text value on the light button
 textValue = function(value){
     if(value == 0)
         return "Turn On";
@@ -80,6 +84,7 @@ textValue = function(value){
         return "Turn Off";
 }
 
+//generate text color on the light button
 generateTextColor = function(value){
     if(value == 0)
         return GLOBAL.COLORS.WHITE;
@@ -87,6 +92,7 @@ generateTextColor = function(value){
         return GLOBAL.COLORS.BLACK;
 }
 
+//generate css class for the light button texts
 textStyle = function(value){
     return {
         fontSize: 20,
@@ -95,6 +101,7 @@ textStyle = function(value){
     }
 }
 
+//generate box background color for the light button
 generateColorBox = function(value) {
     if(value == 0)
         return GLOBAL.COLORS.LIGHTOFF;
@@ -102,6 +109,7 @@ generateColorBox = function(value) {
         return GLOBAL.COLORS.LIGHTON;
 }
 
+//generate the light button css
 automationBox = function(value) {
     return {
         backgroundColor: generateColorBox(value),

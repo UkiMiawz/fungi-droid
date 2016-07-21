@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import * as GLOBAL from './Globals';
 
+/* Card component for all of the sensors value */
+
 class CardComponent extends Component {
     render() {
         return (
@@ -26,6 +28,7 @@ class CardComponent extends Component {
     }
 }
 
+//calculate percentage for the status bar
 calculatePercentage = function(value, limit){
     var percentage = Math.round((value / limit) * 100);
     if(percentage > 100){
@@ -37,6 +40,7 @@ calculatePercentage = function(value, limit){
     return percentage;
 }
 
+//generate color for the status bar to indicate fungi environment status
 generateColor = function(value, minValue, maxValue) {
     if(value > maxValue)
         return GLOBAL.COLORS.RED;
@@ -46,6 +50,7 @@ generateColor = function(value, minValue, maxValue) {
         return GLOBAL.COLORS.GREEN;
 }
 
+//generate css for the sensors status bar
 statusStyle = function(value, minValue, maxValue, limit) {
     return {
         backgroundColor: generateColor(value, minValue, maxValue),

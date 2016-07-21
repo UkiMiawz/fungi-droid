@@ -4,6 +4,8 @@
  * @flow
  */
 
+/*Index file for android app */
+
 import React, {Component} from 'react';
 import {
     AppRegistry,
@@ -16,6 +18,7 @@ import {
 } from 'react-native';
 import Rebase from 're-base';
 
+//import custom components
 import CardComponent from './components/CardComponent'
 import HeaderComponent from './components/HeaderComponent'
 import LoadingComponent from './components/LoadingComponent'
@@ -24,6 +27,7 @@ import AutomationComponent from './components/AutomationComponent'
 import DateComponent from './components/DateComponent'
 import * as GLOBAL from './components/Globals';
 
+//firebase client
 var base = Rebase.createClass(GLOBAL.FIREBASE.URL);
 
 class ContainerProject extends Component {
@@ -38,6 +42,7 @@ class ContainerProject extends Component {
         }
     }
 
+    //do all data calling and binding from firebase on mounting our main container component
     componentDidMount(){
         base.bindToState(GLOBAL.FIREBASE.FUNGI_TEMPERATURE, {
             context: this,
@@ -88,6 +93,7 @@ class ContainerProject extends Component {
         if(this.state.temperatures.length > 0 && this.state.humidities.length > 0 && this.state.luxes.length > 0
             && this.state.lightAutomations.length > 0 && this.state.loading == false)
         {
+                //render our components when data are loaded
                 return (
                     <ScrollView contentContainerStyle={styles.container}>
                         <Image source={require('./images/background.png')} style={styles.backgroundImage} resizeMode={Image.resizeMode.cover}>
@@ -121,6 +127,7 @@ class ContainerProject extends Component {
                 );
         }
 
+        //render splash loading screen when data are not ready
         return (
             <LoadingComponent title="all"/>
         );

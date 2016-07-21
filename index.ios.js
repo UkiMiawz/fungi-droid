@@ -4,6 +4,8 @@
  * @flow
  */
 
+ /* Index file for iOS app, not used */
+
 import React, { Component } from 'react';
 import {
   AppRegistry,

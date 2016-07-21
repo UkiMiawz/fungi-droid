@@ -9,6 +9,8 @@ import {
     Dimensions
 } from 'react-native';
 import * as GLOBAL from './Globals';
+/
+/* Fungi status component, the one with the picture to indicate status of the fungi */
 
 class StatusComponent extends Component {
     render() {
@@ -16,10 +18,11 @@ class StatusComponent extends Component {
             <View style={[styles.statusView]}>
                 <Image source={getStatusImage(this.props.humidity, this.props.lux, this.props.temperature)} style={styles.iconImage} resizeMode={Image.resizeMode.cover}></Image>
             </View>
-    );
+          );
     }
 }
 
+//generate status image from the values differences
 getStatusImage= function(humidity, lux, temperature){
     if(humidity < GLOBAL.HUMIDITY.MAX && humidity > GLOBAL.HUMIDITY.MIN
     && lux < GLOBAL.LUX.MAX && humidity > GLOBAL.LUX.MIN
@@ -27,7 +30,7 @@ getStatusImage= function(humidity, lux, temperature){
         return require("../images/spritFungi1.png");
     }
     else {
-        //calculate which is more urgent by differences
+        //calculate which status is more urgent by differences
         var humidityDiff = 0;
         var temperatureDiff = 0;
         var luxDiff = 0;
@@ -47,6 +50,7 @@ getStatusImage= function(humidity, lux, temperature){
         else if(humidity > GLOBAL.LUX.MAX)
             luxDiff = lux - GLOBAL.LUX.MAX;
 
+        //return corresponding image according to the most urgent status difference
         if(humidityDiff > temperatureDiff && humidityDiff > luxDiff)
             return require("../images/spritFungi2.png");
         else if(luxDiff > temperatureDiff && luxDiff > humidityDiff)

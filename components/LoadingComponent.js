@@ -8,6 +8,8 @@ import {
     View
 } from 'react-native';
 
+/* Splash screen loading component, no logic here */
+
 class LoadingComponent extends Component {
     render() {
         return (
